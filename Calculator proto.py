@@ -1,12 +1,44 @@
 #Практическая работа №1 Мартынов Н.А.
 import math
+def calculator(a):
+    match a:
+        case "Сложение": 
+            result=Sum1+Sum2
+            return result
+        case "Вычитание": 
+            result=Sub1-Sub2
+            return result
+        case "Умножение":
+            result=Mul1*Mul2
+            return result
+        case "Деление":
+            result=Div1/Div2
+            return result
+        case "Степень" :
+            result=NumD**Deg
+            return result
+        case "Квадратный корень":
+            result=math.sqrt(NumR)
+            return result
+        case "Факториал":
+            result=math.factorial(NumF)
+            return result
+        case "Синус":
+            result=math.sin(NumS)
+            return result
+        case "Конус":
+            result=math.cos(NumC)
+            return result
+        case "Тангенс": 
+            result=math.tan(NumT)
+            return result
 
-stop=0
-while stop==0 :
+stop=True
+while stop==True :
     print("Введите наименование операции из приведенного ниже списка,которую вы хотите выполнить (Ввод производится с учётом регистра) \n Сложение  \n Вычитание \n Умножение \n Деление \n Степень \n Квадратный корень \n Факториал \n Синус  \n Косинус \n Тангенс \n Завершить работу ")
     a=input()
-    match a :
-        case 'Сложение': 
+    match a:
+        case "Сложение": 
             test=True
             while test==True :
                 try:
@@ -15,7 +47,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    SumTotal=Sum1+Sum2
+                    SumTotal=calculator(a)
                     print("Результат: ",SumTotal)
                     test=False 
         case "Вычитание": 
@@ -27,7 +59,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    SubTotal=Sub1-Sub2
+                    SubTotal=calculator(a)
                     print("Результат: ",SubTotal)
                     test1=False
         case "Умножение":
@@ -39,7 +71,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    MulTotal=Mul1*Mul2
+                    MulTotal=calculator(a)
                     print("Результат: ",MulTotal)
                     test2=False
         case "Деление":
@@ -54,7 +86,7 @@ while stop==0 :
                     if Div2==0 :
                         print("деление на 0 невозможно")
                     else:
-                        DivTotal=Div1/Div2
+                        DivTotal=calculator(a)
                         print("Результат: ",DivTotal)
                         test3=False
         case "Степень" :
@@ -66,7 +98,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    DegNum=NumD**Deg
+                    DegNum=calculator(a)
                     print(DegNum)
                     test4=False
         case "Квадратный корень":
@@ -80,7 +112,7 @@ while stop==0 :
                     if NumR < 0 :
                         print("Подкоренное выражение не может быть отрицательным")
                     else:
-                        Root=math.sqrt(NumR)
+                        Root=calculator(a)
                         print("Результат: ",Root)
                         test5=False
         case "Факториал":
@@ -94,7 +126,7 @@ while stop==0 :
                     if NumF < 0 :
                         print("Факториала отрицательных чисел не существует")
                     else:
-                        Fac=math.factorial(NumF)
+                        Fac=calculator(a)
                         print(Fac)
                         test6=False
         case "Синус":
@@ -105,7 +137,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    Sin=math.sin(NumS)
+                    Sin=calculator(a)
                     print("Результат: ",Sin)
                     test7=False
         case "Косинус":
@@ -116,7 +148,7 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    Cos=math.cos(NumC)
+                    Cos=calculator(a)
                     print("Результат: ",Cos)
                     test8=False
         case "Тангенс":
@@ -127,10 +159,10 @@ while stop==0 :
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
-                    Tan=math.tan(NumT)
+                    Tan=calculator(a)
                     print("Результат: ",Tan)
                     test9=False
         case "Завершить работу":
-            stop=1
+            stop=False
         case _:
             print("Вы ввели некорректное значение")
