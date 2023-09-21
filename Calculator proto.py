@@ -11,7 +11,7 @@ while stop==0 :
             while test==True :
                 try:
                     Sum1=float(input("Введите первое слагаемое "))
-                    Sum2=float(input("Введите первое слагаемое "))
+                    Sum2=float(input("Введите второе слагаемое "))
                 except Exception:
                     print("Введите целое или вещественное число ")
                 else:
