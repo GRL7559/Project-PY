@@ -10,11 +10,15 @@ def otr1():
 def otr2():
     words=["ум","придаток","вирус"]
     words.sort
+    print(words)
 
 
 def otr3():
-    students={"Петров":5 , "Иванов":3 , "Галкина" : 4 , "Полижайкина":2}
-    corteges=students.items
+    vegetables  = {"Петров": 5, "Иванов": 3, "Галкина": 4, "Полижайкина": 2}
+    corteges = []
+    for student in vegetables.items():
+        corteges.append(student)
+    print(corteges)
 
 def otr4():
     txt=input()
@@ -25,10 +29,11 @@ def otr5():
     fruits={"яблоко","помидор", "лимон"}
     fruits1={"лимон","манго","памело"}
     result=fruits.intersection(fruits1)
+    print(result)
 
 def otr6():
-    employees=["Дмитрий Иванович","Константин Вятчесловович","Сергей Губин"]
-    del employees[1]
-    employees.append("Соня Галкина")
+    employees={"уволен":"Дмитрий Иванович" ,"уволен":"Константин Вятчесловович","действующий":"Сергей Губин"}
+    del employees["уволен"]
+    employees["стажировка"]="Соня Галкина"
     print(employees)
-    
+        
