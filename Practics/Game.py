@@ -36,14 +36,20 @@ def Enimies():
     return [enimie,HP_enimi,ATK_enimi]
 
 def Battle():
-    move=input()
-    match move:
-        case "Защищаться":
-            DEF=DEF*2
-        case "Атаковать":
-            ATK_battle=random.randint(ATK/2,ATK)
-            Danger[1]-=ATK_battle
-            print("Вы нанесли ",ATK_battle,"урона")
+    stop=True
+    while stop==True:
+        move=input()
+        match move:
+            case "Защищаться":
+                DEF=DEF*2
+                stop=False
+            case "Атаковать":
+                ATK_battle=random.randint(ATK/2,ATK)
+                Danger[1]-=ATK_battle
+                print("Вы нанесли ",ATK_battle,"урона")
+                stop=False
+            case _:
+                print("Введено некорректное значение , попробуйте еще раз")
 
 def Battle_mob():
     ATK_mob=random.randint(Danger[2]/2,Danger[2])
@@ -78,16 +84,17 @@ while life==True:
                     initiative=random.randint(0,1)
                     while Danger[1]!=0 or HP!=0:
                         if initiative==0:
-                            print("Ваш ход , выбирите действие , которое хотите совершить:\n\n\n ")
+                            print("Ваш ход , выбирите действие , которое хотите совершить:\nЗащищаться\nАтаковать ")
                             Battle()
                             print("Ход", Danger[0])
                             Battle_mob()
                         else: 
-                            print(Danger[0] ,"ходит первым")
+                            print("Ход", Danger[0])
                             Battle_mob()
-                            print("Ваш ход , выбирите действие , которое хотите совершить:\n\n\n ")
+                            print("Ваш ход , выбирите действие , которое хотите совершить:\nЗащищаться\nАтаковать ")
                             Battle()
                     if HP!=0:
+                        print("Вам удалось одолеть ",Danger[0])
                         stages+=1
                     else:
                         life=False
