@@ -9,16 +9,30 @@ def Equip(item):
 
 def Unequip(item):
     print()
-
+"""
 def Leveling(XP):
     match XP:
-        case 3:
+        case 4:
             LVL=2
             ATK=ATK+2
             DEF=DEF+1
-        case 5:
-            fsf
-"""
+            print("Поздравляю , вы достигли 2 уровня!")
+        case 7:
+            LVL=3
+            ATK+=1
+            DEF_static+=1
+            print("Поздравляю , вы достигли 3 уровня!")
+        case 10:
+            LVL=4
+            ATK+=1
+            DEF_static+=1
+            print("Поздравляю , вы достигли 4 уровня!")
+        case 13:
+            LVL=5
+            ATK+=1
+            DEF_static+=1
+            print("Поздравляю , вы достигли 5 уровня!")
+
 def Ivents():
     random_ivent={"Бой" ,"Интересная находка" ,"Продовольственный ящик"}      
     ivent=random_ivent.pop(random.randint(0,2)) #не работает 
@@ -94,7 +108,15 @@ while life==True:
                             print("Ваш ход , выбирите действие , которое хотите совершить:\nЗащищаться\nАтаковать ")
                             Battle()
                     if HP!=0:
+                        match Danger[0]:
+                            case "волк":
+                                XP+=3
+                            case "скорпион":
+                                XP+=2
+                            case "перекати поле":
+                                XP+=1
                         print("Вам удалось одолеть ",Danger[0])
+                        leveling(XP)
                         stages+=1
                     else:
                         life=False
