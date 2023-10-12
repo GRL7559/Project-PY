@@ -16,14 +16,13 @@ def New_item(equipment_I):
         if equipment_I[Check_class(item)]=="ничего":
             print(f"Нынешняя экипировка:Отсутствует Прибавка к характеристикам:{Check_stat(equipment_I[Check_class(item)])}")
         else:
-            print(f"Нынешняя экипировка:{equipment_I[Check_class(item)]} Прибавка к характеристикам:{Check_stat(equipment_I[Check_class(item)])}")
+            print(f"Нынешняя экипировка: {equipment_I[Check_class(item)]} Прибавка к характеристикам: {Check_stat(equipment_I[Check_class(item)])}")
         stop1=True
         while stop1==True:
             grab=input()
             match grab:
                 case "Да":
                     equipment_I=Equip(item,equipment_I)
-                    print("\n")
                     stop1=False
                 case "Нет":  
                     print("\nВы отбросили вещицу от себя и продолжили свой путь\n")
@@ -53,39 +52,39 @@ def Healing(HP,MAX_HP):
 def Equip(item,equipment_E):
     match item:
         case "монтировка":
-            print("Гордон гордится вами")
+            print("\nГордон гордится вами")
             equipment_E["руки"]=item
             return equipment_E
-        case "мачете",:
-            print("Это мачете довольно острое , хотя самодельная ручка уже начала расслаиваться")
+        case "мачете":
+            print("\nЭто мачете довольно острое , хотя самодельная ручка уже начала расслаиваться")
             equipment_E["руки"]=item
             return equipment_E
         case "пистолет":
-            print("Этот пистолет в удивительно хорошем состонии ,для пролежавшего некоторое время в песке")
+            print("\nЭтот пистолет в удивительно хорошем состонии ,для пролежавшего некоторое время в песке")
             equipment_E["руки"]=item
             return equipment_E
         case "самодельный доспех":
-            print("Довольно странный доспех , сделанный из подручных средств , ну это лучше чем ничего")
+            print("\nДовольно странный доспех , сделанный из подручных средств , ну это лучше чем ничего")
             equipment_E["тело"]=item
             return equipment_E
         case "одежда из прочной ткани":
-            print("Одежда из плотной матерчатой ткани , довольно удобная , но ее защитные свойства вызывают сомнения")
+            print("\nОдежда из плотной матерчатой ткани , довольно удобная , но ее защитные свойства вызывают сомнения")
             equipment_E["тело"]=item
             return equipment_E
         case "кевларовый бронижилет":
-            print("Удивительно , что такой технологичный бронижилет оказался посреди пустыне")
+            print("\nУдивительно , что такой технологичный бронижилет оказался посреди пустыне")
             equipment_E["тело"]=item
             return equipment_E
         case "кроссовки":
-            print("Удобные кроссовки , но по песку особо не побегаешь , но хотя-бы ступни не болят")
+            print("\nУдобные кроссовки , по песку конечно не побегаешь , но хотя-бы ступни не болят")
             equipment_E["ноги"]=item 
             return equipment_E
         case "рабочие ботинки":
-            print("Сапоги сделанные на века , к тому же очень хорошо сидят")
+            print("\nСапоги сделанные на века , к тому же очень хорошо сидят")
             equipment_E["ноги"]=item 
             return equipment_E
         case "сапоги с кевларовыми пластинами":
-            print("Вау , что военное обмундирование делает посреди пустыни , а впрочем это не моё дело")
+            print("\nВау , что военное обмундирование делает посреди пустыни , а впрочем это не моё дело")
             equipment_E["ноги"]=item 
             return equipment_E
 
@@ -153,8 +152,8 @@ def Ivents():
 
 def Enimies():
     enimies=["Койот","Скорпион" ,"Перекати поле"]               
-    HP_enimies={"Койот":15 ,"Скорпион":8 ,"Перекати поле":10}   
-    ATK_enimies={"Койот":12 ,"Скорпион":10 ,"Перекати поле":1}
+    HP_enimies={"Койот":15 ,"Скорпион":8 ,"Перекати поле":12}   
+    ATK_enimies={"Койот":10 ,"Скорпион":8 ,"Перекати поле":5}
     enimie=random.choice(enimies)                                                                                                    
     return [enimie,HP_enimies.get(enimie),ATK_enimies.get(enimie)]
 
@@ -177,18 +176,22 @@ def Battle(HP,XP):
             K=Result_hero[2]
             if Danger[1]>0:
                 print(f"Ходит {Danger[0]}\n")
-                Result_mob=Battle_mob(DEF_option,HP,K)
-                HP=Result_mob[0]
-                K=Result_mob[1]
-            if K==0:
-                DEF_option=0
+                HP=Battle_mob(DEF_option,HP)
+            match K:
+                case 0:K=K
+                case 2:K-=1
+                case 1:
+                    K=0
+                    DEF_option=0
         else: 
             print(f"Ходит {Danger[0]}\n")
-            Result_mob=Battle_mob(DEF_option,HP,K)
-            HP=Result_mob[0]
-            K=Result_mob[1]
-            if K==0:
-                DEF_option=0               
+            HP=Battle_mob(DEF_option,HP)
+            match K:
+                case 0:K=K
+                case 2:K-=1
+                case 1:
+                    K=0
+                    DEF_option=0               
             if HP>0:
                 print("Ваш ход , выберите действие , которое хотите совершить:\t\tОбратите внимание ввод ответов производится с заглавной буквы\nЗащищаться\nАтаковать\n ")
                 Result_hero=Battle_hero(DEF,DEF_option,K)
@@ -217,28 +220,32 @@ def Battle_hero(DEF,DEF_option,K):
             case "Защищаться":
                 DEF_option=DEF
                 K=2
-                "\n"
+                print("\n")
                 stop=False
             case "Атаковать":
                 ATK_battle=random.randint(ATK-4,ATK)
                 Danger[1]-=ATK_battle
-                if Danger[1]>0:
-                    print(f"\nВы нанесли {ATK_battle} единиц урона\nЗдоровье противника:{Danger[1]}\n")
+                if ATK_battle>1:
+                    if Danger[1]>0:
+                        print(f"\nВы нанесли {ATK_battle} единиц урона\nЗдоровье противника:{Danger[1]}\n")
+                    else:
+                        print(f"\nВы нанесли {ATK_battle} единиц урона\n")
+                    stop=False
                 else:
-                    print(f"\nВы нанесли {ATK_battle} единиц урона\n")
-                stop=False
+                    if Danger[1]>0:
+                        print(f"\nВы нанесли {ATK_battle} единицу урона\nЗдоровье противника:{Danger[1]}\n")
+                    else:
+                        print(f"\nВы нанесли {ATK_battle} единицу урона\n")
+                    stop=False
             case _:
                 print("\nВведено некорректное значение , попробуйте еще раз\n")
     return [Danger[1],DEF_option,K]
 
 
-def Battle_mob(DEF_option,HP,K):
-    ATK_mob=random.randint(Danger[2]-5,Danger[2])
-    if DEF_option-5<=0: DEF_min=1
-    else:               DEF_min=DEF_option
-    DEF_random=random.randint(DEF_min,DEF_option)
+def Battle_mob(DEF_option,HP):
+    ATK_mob=random.randint(Danger[2]-3,Danger[2])
+    DEF_random=random.randint(DEF_option-3,DEF_option)
     if DEF_option>0:
-        K-=1
         if ATK_mob-DEF_random>0:
             HP-=(ATK_mob-DEF_random)
             print(f"{Danger[0]} наносит вам {ATK_mob-DEF_random} единиц урона\nОставшееся здоровье:{HP}\n")
@@ -248,7 +255,7 @@ def Battle_mob(DEF_option,HP,K):
     else:
         HP-=ATK_mob
         print(f"{Danger[0]} наносит вам {ATK_mob} единиц урона\nОставшееся здоровье:{HP}\n")
-    return [HP,K]
+    return HP
 
 
 def Leveling(XP):
@@ -295,7 +302,7 @@ DEF=Stats[2]
 MAX_HP=Stats[3]
 stages=0
 life=True
-equipment={"руки":"ничего","тело":"лохмотья","потрепанные сандалии":"ничего"}
+equipment={"руки":"ничего","тело":"лохмотья","ноги":"потрепанные сандалии"}
 print("Вы ничего не помните, кроме загадочнй фигуры в маске Анубиса , которая телепортирует вас в пустыню.Вы остаетесь один на раскалённых песчаных дюнах, выживая в суровых условиях и ища путь домой.\n")
 while life==True:
     print("Выберите что вы хотите сделать: \nИдти\nОсмотреть себя(экипировка и харакстеристики)\nСдаться\t\t\t\t\t\t\t\tОбратите внимание ввод ответов производится с заглавной буквы\n")
