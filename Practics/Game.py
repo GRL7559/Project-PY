@@ -181,6 +181,9 @@ def New_item(equipment_I):
             grab=Input()
             match grab:
                 case "Да":
+                    New_stats=Stat_unequipment(ATK,DEF,equipment_I)
+                    ATK=New_stats[0]
+                    DEF=New_stats[1]
                     equipment_I=Equip(item,equipment_I)
                     stop1=False
                 case "Нет":  
@@ -228,6 +231,28 @@ def Equip(item,equipment_E):
             print("\nВау , что военное обмундирование делает посреди пустыни , а впрочем это не моё дело\n")
             equipment_E["ноги"]=item 
             return equipment_E
+
+
+def Stat_unequipment(ATK,DEF,equipment_S):
+    hands=equipment_S["руки"]
+    body=equipment["тело"]
+    foots=equipment["ноги"]
+    match hands:
+        case "ничего"                           :ATK-=0
+        case "монтировка"                       :ATK-=2
+        case "мачете"                           :ATK-=4
+        case "пистолет"                         :ATK-=6
+    match body:
+        case "лохмотья"                         :DEF-=0
+        case "одежда из прочной ткани"          :DEF-=1
+        case "самодельный доспех"               :DEF-=3
+        case "кевларовый бронижилет"            :DEF-=5
+    match foots:
+        case "потрепанные сандалии"             :DEF-=0
+        case "кроссовки"                        :DEF-=1
+        case "рабочие ботинки"                  :DEF-=2
+        case "сапоги с кевларовыми пластинами"  :DEF-=3
+    return[ATK,DEF]
 
 
 def Stat_equipment(ATK,DEF,equipment_S):
