@@ -12,7 +12,7 @@ def Loot():
     return random.choice(loot)
 
 
-def Ivents():
+def Events():
     random_ivent=("Бой" ,"Интересная находка" ,"Продовольственный ящик")                                                  
     return random.choice(random_ivent)
 
@@ -298,7 +298,7 @@ while life==True:
     match choice:
         case "Идти":
             print(".....")
-            Event=Ivents()
+            Event=Events()
             match Event:
                 case "Бой":             
                     Danger=Enimies()
