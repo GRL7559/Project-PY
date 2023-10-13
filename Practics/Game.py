@@ -50,7 +50,7 @@ def Look(equipment_L):
 
 def Enimies():
     enimies=["Койот","Скорпион" ,"Перекати поле"]               
-    HP_enimies={"Койот":15 ,"Скорпион":8 ,"Перекати поле":12}   
+    HP_enimies={"Койот":15 ,"Скорпион":8 ,"Перекати поле":10}   
     ATK_enimies={"Койот":10 ,"Скорпион":8 ,"Перекати поле":5}
     enimie=random.choice(enimies)                                                                                                    
     return [enimie,HP_enimies.get(enimie)+2*LVL,ATK_enimies.get(enimie)+LVL]
@@ -165,7 +165,7 @@ def Healing(HP,MAX_HP):
     return [HP,MAX_HP]
 
 
-def New_item(equipment_I):
+def New_item(equipment_I,ATK,DEF):
     print("Кажется в песках ближайшего бархана что-то блестит...")
     item=Loot()
     if item==equipment_I["ноги"] or item==equipment_I["руки"] or item==equipment_I["тело"]:
@@ -190,7 +190,7 @@ def New_item(equipment_I):
                     print("\nВы отбросили вещицу от себя и продолжили свой путь\n")
                     stop1=False
                 case _:print("\nВведено некорректоное значение\n")
-    return equipment_I
+    return [equipment_I,ATK,DEF]
 
 
 def Equip(item,equipment_E):
@@ -348,7 +348,10 @@ while life==True:
                     MAX_HP=Heal[1]
                     stages+=1
                 case "Интересная находка":
-                    New_item(equipment)
+                    Old_stats=New_item(equipment,ATK,DEF)
+                    equipment=Old_stats[0]
+                    ATK=Old_stats[1]
+                    DEF=Old_stats[2]
                     New_stats=Stat_equipment(ATK,DEF,equipment)
                     ATK=New_stats[0]
                     DEF=New_stats[1]   
