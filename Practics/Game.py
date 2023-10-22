@@ -1,10 +1,76 @@
 import random
+import json
+import csv
+import os
 
 def Input():
     value=input()
     value=value.strip()
     value=value.capitalize()
     return value
+
+
+def Saves(XP,HP,equipment):   
+    data=[XP,HP,equipment["руки"],equipment["тело"],equipment["ноги"]]
+    while(True):
+        print("\nЧто вы хотите сделать с сохранением?\nСохранить\nЗагрузить\nУдалить\n")
+        save=Input()
+        match save:
+            case "Сохранить":
+                Save(data)
+                print("\nСохранение успешно создано!\n")
+                break
+            case "Загрузить":
+                return Load(data)
+            case "Удалить":
+                Delete()
+                break
+            case _:print("\nВведено некорректное значение")
+
+
+def Save(data):
+    if os.path.exists('save.json'):
+        os.remove('save.json')
+    with open('save.json', 'w',) as file:
+        json.dump(data , file , indent=4)
+        file.close() 
+
+
+def Load(data):
+    if os.path.exists('save.json'):
+        with open('save.json','r') as file:
+            upload_data=json.load(file)
+            file.close()
+        print("\nСохранение успешно загружено!\n")
+        return upload_data
+    else:
+        print("\nУ вас нет сохранения , которое можно загрузить\n")
+        return(data)
+
+
+def Delete():
+    try:
+        os.remove('save.json')
+        print("\nСохранение успешно загружено!\n")
+    except FileNotFoundError:
+        print("\nУ вас нет сохранения, которое можно удалить\n")
+
+
+def Tab_Lead(data_top):
+    fieldnames = ['Очки','Имя','Уровень','Этапы']
+    k=1
+    if os.path.exists('results.csv'):
+        with open('results.csv','r', newline='') as file:
+            reader=csv.DictReader(file,fieldnames=fieldnames,delimiter=';')
+            next(reader)
+            for row in reader:
+                data_top.append(row)  
+        os.remove('results.csv')    
+    with open('results.csv','w', newline='') as file:
+        writer = csv.DictWriter(file,fieldnames=fieldnames,delimiter=';')
+        writer.writeheader()  
+        for row in data_top:
+            writer.writerow(row)
 
 
 def Loot():
@@ -19,29 +85,16 @@ def Events():
 
 def Leveling(XP):
     match XP:
-        case 1:return [1,5,3,100]
-        case 2:return [1,5,3,100]
-        case 3:return [1,5,3,100]
-        case 4:
-            print("Поздравляю , вы достигли 2 уровня!\nХарактеристики были повышены\n")
-            return [2,7,4,108]
-        case 5:return [2,7,4,108]
-        case 6:return [2,7,4,108]
-        case 7:
-            print("Поздравляю , вы достигли 3 уровня!\nХарактеристики были повышены\n")
-            return [3,8,9,120]
-        case 8:return [3,8,9,120]
-        case 9:return [3,8,9,120]
-        case 10:
-            print("Поздравляю , вы достигли 4 уровня!\nХарактеристики были повышены\n")
-            return [4,10,10,128]
-        case 11:return [4,10,10,128]
-        case 12:return [4,10,10,128]
-        case 13:
-            print("Поздравляю , вы достигли 5 уровня!\nХарактеристики были повышены\n")
-            return [5,12,12,140]
-        case _:return [5,12,12,140]
+        case 1|2|3:return [1,5,3,100]
+        case 4|5|6:return [2,7,4,108]
+        case 7|8|9:return [3,8,9,120]
+        case 10|11|12:return [4,10,10,128]
+        case 13|_:return [5,12,12,140]
 
+
+def Leveling_grades(old_XP,XP,LVL):
+            if old_XP<1+(LVL-1)*3 and XP>=1+(LVL-1)*3 and LVL!=1 or old_XP>13:
+                print(f"Поздравляю , вы достигли {LVL} уровня!\nХарактеристики были повышены\n")
 
 def Look(equipment_L):
     print(f"\nУровень: {LVL}\nЗдоровье: {HP}/{MAX_HP}\nАтака: {ATK}\nЗащита: {DEF}\n")
@@ -50,10 +103,10 @@ def Look(equipment_L):
 
 def Enimies():
     enimies=["Койот","Скорпион" ,"Перекати поле"]               
-    HP_enimies={"Койот":15 ,"Скорпион":8 ,"Перекати поле":10}   
-    ATK_enimies={"Койот":10 ,"Скорпион":8 ,"Перекати поле":5}
+    HP_enimies={"Койот":5 ,"Скорпион":4 ,"Перекати поле":3}   
+    ATK_enimies={"Койот":8 ,"Скорпион":5 ,"Перекати поле":4}
     enimie=random.choice(enimies)                                                                                                    
-    return [enimie,HP_enimies.get(enimie)+2*LVL,ATK_enimies.get(enimie)+LVL]
+    return [enimie,HP_enimies.get(enimie)*LVL,ATK_enimies.get(enimie)*LVL]
 
 
 def Battle(HP,XP):
@@ -173,7 +226,7 @@ def New_item(equipment_I,ATK,DEF):
     else:
         print(f"Ого , да это же {item} ,хотите взять?\nПрибавка к характеристикам: {Check_stat(item)}")
         if equipment_I[Check_class(item)]=="ничего":
-            print(f"Нынешняя экипировка:Отсутствует Прибавка к характеристикам:{Check_stat(equipment_I[Check_class(item)])}")
+            print(f"Нынешняя экипировка: Отсутствует\nПрибавка к характеристикам: {Check_stat(equipment_I[Check_class(item)])}\n")
         else:
             print(f"Нынешняя экипировка: {equipment_I[Check_class(item)]}\nПрибавка к характеристикам: {Check_stat(equipment_I[Check_class(item)])}\n")
         stop1=True
@@ -234,20 +287,17 @@ def Equip(item,equipment_E):
 
 
 def Stat_unequipment(ATK,DEF,equipment_S):
-    hands=equipment_S["руки"]
-    body=equipment["тело"]
-    foots=equipment["ноги"]
-    match hands:
+    match equipment_S["руки"]:
         case "ничего"                           :ATK-=0
         case "монтировка"                       :ATK-=2
         case "мачете"                           :ATK-=4
         case "пистолет"                         :ATK-=6
-    match body:
+    match equipment["тело"]:
         case "лохмотья"                         :DEF-=0
         case "одежда из прочной ткани"          :DEF-=1
         case "самодельный доспех"               :DEF-=3
         case "кевларовый бронижилет"            :DEF-=5
-    match foots:
+    match equipment["ноги"]:
         case "потрепанные сандалии"             :DEF-=0
         case "кроссовки"                        :DEF-=1
         case "рабочие ботинки"                  :DEF-=2
@@ -256,20 +306,17 @@ def Stat_unequipment(ATK,DEF,equipment_S):
 
 
 def Stat_equipment(ATK,DEF,equipment_S):
-    hands=equipment_S["руки"]
-    body=equipment["тело"]
-    foots=equipment["ноги"]
-    match hands:
+    match equipment_S["руки"]:
         case "ничего"                           :ATK+=0
         case "монтировка"                       :ATK+=2
         case "мачете"                           :ATK+=4
         case "пистолет"                         :ATK+=6
-    match body:
+    match equipment["тело"]:
         case "лохмотья"                         :DEF+=0
         case "одежда из прочной ткани"          :DEF+=1
         case "самодельный доспех"               :DEF+=3
         case "кевларовый бронижилет"            :DEF+=5
-    match foots:
+    match equipment["ноги"]:
         case "потрепанные сандалии"             :DEF+=0
         case "кроссовки"                        :DEF+=1
         case "рабочие ботинки"                  :DEF+=2
@@ -295,17 +342,14 @@ def Check_stat(item):
 
 def Check_class(item):
     match item:
-        case "монтировка"                        :return"руки"
-        case "мачете"                            :return"руки"
-        case "пистолет"                          :return"руки"
-        case "одежда из прочной ткани"           :return"тело"
-        case "самодельный доспех"                :return"тело"
-        case "кевларовый бронижилет"             :return"тело"
-        case "кроссовки"                         :return"ноги"
-        case "рабочие ботинки"                   :return"ноги"
-        case "сапоги с кевларовыми пластинами"   :return"ноги"
+        case "монтировка"|"мачете"|"пистолет"                                          :return"руки"
+        case "одежда из прочной ткани"|"самодельный доспех"|"кевларовый бронижилет"    :return"тело"
+        case "кроссовки"|"рабочие ботинки"|"сапоги с кевларовыми пластинами"           :return"ноги"
 
 
+print("Вы ничего не помните, кроме загадочной фигуры в маске Анубиса , которая телепортирует вас в пустыню\nВозможно вам удастся вспомнить свое имя?\n")
+Name=Input()
+print(f"\nИ так ,{Name}, Вы остаетесь один на раскалённых песчаных дюнах, выживая в суровых условиях и ища путь домой.\n")
 XP =1
 Stats=Leveling(XP)
 HP=100
@@ -316,9 +360,9 @@ MAX_HP=Stats[3]
 stages=0
 life=True
 equipment={"руки":"ничего","тело":"лохмотья","ноги":"потрепанные сандалии"}
-print("Вы ничего не помните, кроме загадочнй фигуры в маске Анубиса , которая телепортирует вас в пустыню.Вы остаетесь один на раскалённых песчаных дюнах, выживая в суровых условиях и ища путь домой.\n")
+
 while life==True:
-    print("Выберите что вы хотите сделать: \nИдти\nОсмотреть себя(экипировка и харакстеристики)\nСдаться\n")
+    print("Выберите что вы хотите сделать: \nИдти\nОсмотреть себя(экипировка и харакстеристики)\nСдаться\nСохранение\n")
     choice=Input()
     match choice:
         case "Идти":
@@ -332,12 +376,14 @@ while life==True:
                     if HP<=0:
                         life=False
                     else:
+                        old_XP=XP
                         XP=Results[1]
                         Stats=Leveling(XP)
                         LVL=Stats[0]
                         ATK=Stats[1]
                         DEF=Stats[2]
                         MAX_HP=Stats[3]
+                        Leveling_grades(old_XP,XP,LVL)
                         Stats=Stat_equipment(ATK,DEF,equipment)
                         ATK=Stats[0]
                         DEF=Stats[1]
@@ -361,8 +407,30 @@ while life==True:
         case "Сдаться":
             print(" ")
             life=False
+        case "Сохранение":
+            Saved_stats=Saves(XP,HP,equipment)
+            if Saved_stats is None:
+                continue
+            else:
+                XP                  =Saved_stats[0]
+                HP                  =Saved_stats[1]
+                equipment["руки"]   =Saved_stats[2]
+                equipment["тело"]   =Saved_stats[3]
+                equipment["ноги"]   =Saved_stats[4]
+                Stats=Leveling(XP)
+                LVL                 =Stats[0]
+                ATK                 =Stats[1]
+                DEF                 =Stats[2]
+                MAX_HP              =Stats[3]
+                Stats=Stat_equipment(ATK,DEF,equipment)
+                ATK                 =Stats[0]
+                DEF                 =Stats[1]
         case _:
-            print("\nВы ввели некорректое действие\n")  
+            print("\nВы ввели некорректое действие\n")          
 score=XP*10     
 print(F"Вы умерли\nНабранные вами очки: {score}\nВаш уровень: {LVL}\nПройдено этапов: {stages}\n")
-print("Вас встречает до боли знакомая фигура , это Анубис.\nОн раскатисто произносит:Ты прошел испытание и удостоен моей аудиенции смертный. Теперь посмотрим , дотоин ли ты пребывания в Аменти...\n")
+print("Вас встречает до боли знакомая фигура , это Анубис.\nОн раскатисто произносит:Теперь я понял твою сущность иты можешь быть удостоен моей аудиенции , смертный. Теперь посмотрим , дотоин ли ты пребывания в Аменти...\n")
+data_top=[
+    {'Очки': score,'Имя': Name ,'Уровень':LVL,'Этапы':stages}
+]
+Tab_Lead(data_top)
