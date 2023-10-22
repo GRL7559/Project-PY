@@ -10,8 +10,8 @@ def Input():
     return value
 
 
-def Saves(XP,HP,equipment):   
-    data=[XP,HP,equipment["руки"],equipment["тело"],equipment["ноги"]]
+def Saves(XP,HP,equipment,Name):   
+    data=[XP,HP,equipment["руки"],equipment["тело"],equipment["ноги"],Name]
     while(True):
         print("\nЧто вы хотите сделать с сохранением?\nСохранить\nЗагрузить\nУдалить\n")
         save=Input()
@@ -408,7 +408,7 @@ while life==True:
             print(" ")
             life=False
         case "Сохранение":
-            Saved_stats=Saves(XP,HP,equipment)
+            Saved_stats=Saves(XP,HP,equipment,Name)
             if Saved_stats is None:
                 continue
             else:
@@ -417,6 +417,7 @@ while life==True:
                 equipment["руки"]   =Saved_stats[2]
                 equipment["тело"]   =Saved_stats[3]
                 equipment["ноги"]   =Saved_stats[4]
+                Name                =Saved_stats[5]
                 Stats=Leveling(XP)
                 LVL                 =Stats[0]
                 ATK                 =Stats[1]
