@@ -31,14 +31,14 @@ def Saves(XP,HP,equipment,Name):
 def Save(data):
     if os.path.exists('save.json'):
         os.remove('save.json')
-    with open('save.json', 'w',) as file:
-        json.dump(data , file , indent=4)
+    with open('save.json', 'w',encoding='utf-8') as file:
+        json.dump(data , file , indent=4,ensure_ascii=False)
         file.close() 
 
 
 def Load(data):
     if os.path.exists('save.json'):
-        with open('save.json','r') as file:
+        with open('save.json','r',encoding='utf-8') as file:
             upload_data=json.load(file)
             file.close()
         print("\nСохранение успешно загружено!\n")
@@ -51,7 +51,7 @@ def Load(data):
 def Delete():
     try:
         os.remove('save.json')
-        print("\nСохранение успешно загружено!\n")
+        print("\nСохранение успешно удалено!\n")
     except FileNotFoundError:
         print("\nУ вас нет сохранения, которое можно удалить\n")
 
