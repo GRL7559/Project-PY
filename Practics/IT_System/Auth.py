@@ -1,9 +1,9 @@
-import My_DB 
+from DB_Doctor import DB_Doctor 
 
 class Auth:
 	def log_in():
 		while(True):
-			code = My_DB.getData("Attending_doctor")
+			code = DB_Doctor.getData()
 			print("Введите логин(телефон)",end="")
 			login = int(input)
 			if len.login != 11:
@@ -26,7 +26,7 @@ class Auth:
 				print("Вход успешно выполнен")
 				return id_doctor
 			else:
-				print("Неверный пароль")
+				print("Неверный пароль"),
 
 	def sign_up():
 		insert = [{"Surname_D":""},{"Name_D":""},{"Secondname_D":""},{"Phone":0},{"Password":0}]
@@ -40,9 +40,10 @@ class Auth:
 		insert.Phone=int(input())
 		print("Введите пароль",end="")
 		insert.Password=input()
-		My_DB.insertData("Attending_doctor",insert)
+		DB_Doctor.insertData("Attending_doctor",insert)
 		print("Пользователь успешно добавлен")
-		id_doctor=My_DB.getId()
+		search = {"phone":insert.Phone}
+		id_doctor=DB_Doctor.getId(search)
 		return id_doctor
 
 	
