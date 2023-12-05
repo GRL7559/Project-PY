@@ -1,23 +1,27 @@
 from DB_Doctor import DB_Doctor 
-
+import re
 class Auth:
-	def log_in():
+	def __init__(self):
+		pass
+
+	def log_in(self):
+		doctor = DB_Doctor()
+		code = doctor.getData()
 		while(True):
-			code = DB_Doctor.getData()
 			print("Введите логин(телефон)",end="")
-			login = int(input)
-			if len.login != 11:
+			try:
+				login = int(input())
+			except(Exception):
 				print("Введено некорректное значение")
 				continue
+			confirm_login=False
+			for i in range(1,len(code)-1):
+				if code[i]==login:
+					id_doctor = i
+					confirm_login = True
+			if confirm_login:break
 			else:
-				confirm_login=False
-				for i in range(1,len.code-1):
-					if code[i]==login:
-						id_doctor = i
-						confirm_login = True
-				if confirm_login:break
-				else:
-					print("Пользователь не найден")
+				print("Пользователь не найден")
 		while(True):
 			print("Введите пароль",end="")
 			password=input()
@@ -28,8 +32,8 @@ class Auth:
 			else:
 				print("Неверный пароль"),
 
-	def sign_up():
-		insert = [{"Surname_D":""},{"Name_D":""},{"Secondname_D":""},{"Phone":0},{"Password":0}]
+	def sign_up(self):
+		insert = {"Surname_D":"","Name_D":"","Secondname_D":"","Phone":0,"Password":0}
 		print("Введите фамилию",end="")
 		insert.Surname_D=input()
 		print("Введите имя",end="")
@@ -39,17 +43,19 @@ class Auth:
 		print("Введите номер телефона",end="")
 		insert.Phone=int(input())
 		print("Введите пароль",end="")
-		insert.Password=input()
-		DB_Doctor.insertData("Attending_doctor",insert)
+		while True:
+			insert.Password = input("Введите пароль: ")
+			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert.Password):
+				print("Пароль принят")
+				break
+			else:
+				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
+		DB_Doctor.insertData("Attending_Doctor",insert)
 		print("Пользователь успешно добавлен")
 		search = {"phone":insert.Phone}
 		id_doctor=DB_Doctor.getId(search)
 		return id_doctor
 
 	
-	print("Здравствуйте, для Входа нажмите 1 , для регестрации нажмите 2")
-	enter = input()
-	match enter:
-		case 1:log_in
-		case 2:sign_up
+
 			

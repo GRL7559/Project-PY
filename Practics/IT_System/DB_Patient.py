@@ -1,8 +1,13 @@
 from DB import DB
 
 class DB_Patient(DB):
+    def __init__(self):
+        #self.create_database()
+        pass
+
     def show_patient(self, id_doctor):
-        patients = self.executeQuerry(f"""SELECT Patient_ID FROM Medicial_card WHERE Doctor_ID = {id_doctor}""")
+        id_p = self.executeQuerry(f"""SELECT Patient_ID FROM Medicial_card WHERE Doctor_ID = {id_doctor}""")
+        patients = self.executeQuerry(f"""SELECT * FROM Patient WHERE ID_Patient = {id_p}""")
         k=1
         for patient in patients:
             print(f"{k} {patient.Surname_P} {patient.Name_P} {patient.Secondname_P}")
