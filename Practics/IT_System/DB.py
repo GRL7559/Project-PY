@@ -107,10 +107,10 @@ class DB:
                 Disease_ID INTEGER,
                 Severity_ID INTEGER,
                 Сost_services INTEGER,
-                CONSTRAINT FK_Patient FOREIGN KEY(Patient_ID)REFERENCES Patient(ID_Patient),
-                CONSTRAINT FK_Doctor FOREIGN KEY(Doctor_ID)REFERENCES Attending_Doctor(ID_Doctor),
-                CONSTRAINT FK_Disease FOREIGN KEY(Disease_ID)REFERENCES Disease(ID_Disease),
-                CONSTRAINT FK_Severity FOREIGN KEY(Severity_ID)REFERENCES Severity(ID_Severity)
+                CONSTRAINT FK_Patient FOREIGN KEY(Patient_ID) REFERENCES Patient(ID_Patient),
+                CONSTRAINT FK_Doctor FOREIGN KEY(Doctor_ID) REFERENCES Attending_Doctor(ID_Doctor),
+                CONSTRAINT FK_Disease FOREIGN KEY(Disease_ID) REFERENCES Disease(ID_Disease),
+                CONSTRAINT FK_Severity FOREIGN KEY(Severity_ID) REFERENCES Severity(ID_Severity)
             );""")
         self.executeQuerry("""
             INSERT INTO Medical_card(Patient_ID,Doctor_ID,Disease_ID,Severity_ID,Сost_services)

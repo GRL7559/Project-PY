@@ -34,19 +34,17 @@ class Auth:
 
 	def sign_up(self):
 		insert = {"Surname_D":"","Name_D":"","Secondname_D":"","Phone":0,"Password":0}
-		print("Введите фамилию",end="")
-		insert.Surname_D=input()
-		print("Введите имя",end="")
-		insert.Name_D=input()
-		print("Введите отчество",end="")
-		insert.Secondname_D=input()
-		print("Введите номер телефона",end="")
-		insert.Phone=int(input())
-		print("Введите пароль",end="")
+		print("Введите фамилию", end="")
+		insert["Surname_D"] = input()
+		print("Введите имя", end="")
+		insert["Name_D"] = input()
+		print("Введите отчество", end="")
+		insert["Secondname_D"] = input()
+		print("Введите номер телефона", end="")
+		insert["Phone"] = int(input())
 		while True:
-			insert.Password = input("Введите пароль: ")
-			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert.Password):
-				print("Пароль принят")
+			insert["Password"] = input("Введите пароль: ")
+			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert["Password"]):
 				break
 			else:
 				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
