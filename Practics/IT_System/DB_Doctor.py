@@ -9,5 +9,5 @@ class DB_Doctor(DB):
     
     def getData(self):
         result = super().getData("Attending_Doctor")
-        print("Результат запроса:", result) 
+        print("Результат запроса:", result)  
         return result

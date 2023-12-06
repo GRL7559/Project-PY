@@ -4,12 +4,17 @@ from DB_Patient import DB_Patient
 class main:
     registry = DB_Patient()
     auth = Auth()
-    print("Здравствуйте, для Входа нажмите 1 , для регестрации нажмите 2")
-    enter=input()
-    match enter:
-        case "1": id=auth.log_in()
-        case "2": id=auth.sign_up()
-        case _: print("Введено неккоректное значение")
+    while(True):
+        print("Здравствуйте, для Входа нажмите 1 , для регестрации нажмите 2")
+        enter=input()
+        match enter:
+            case "1": 
+                id=auth.log_in()
+                break
+            case "2": 
+                id=auth.sign_up()
+                break
+            case _: print("Введено неккоректное значение")
     while(True):
         print("Что вы хотите сделать?\n1.Добавить пациента\n2.Выписать пациента\n3.Изменить диагноз\n4.Посмотреть данные медкарты\n5.Заврешить работу с программой")
         choise=input()
