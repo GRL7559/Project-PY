@@ -62,7 +62,6 @@ class DB:
         self.executeQuerry(querry, tuple(list(data.values()) + list(condition.values())))
 
     def createDatabase(self):
-        
         columns = [
             "ID_Patient INTEGER PRIMARY KEY",
             "Surname_P VARCHAR(100) NOT NULL",
