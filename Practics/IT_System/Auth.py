@@ -1,4 +1,4 @@
-from DB_Doctor import DB_Doctor 
+from DB_Doctor import DB_Doctor
 import re
 class Auth:
 	def __init__(self):
@@ -48,7 +48,7 @@ class Auth:
 				break
 			else:
 				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
-		DB_Doctor.insertData("Attending_Doctor",insert)
+		DB_Doctor.insertData(insert)
 		print("Пользователь успешно добавлен")
 		search = {"Phone":insert["Phone"]}
 		id_doctor=DB_Doctor.getId(search)

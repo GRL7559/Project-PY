@@ -2,9 +2,14 @@ from DB import DB
 
 class DB_Patient(DB):
     def __init__(self):
-        #self.createDatabase()
-        pass
+        self.createDatabase()
+        #pass
 
+    def getData(self):
+        result = super().getData("Patient")
+        print("Результат запроса:", result)  
+        return result
+       
     def show_patient(self, id_doctor):
         id_p = self.executeQuerry(f"""SELECT Patient_ID FROM Medicial_card WHERE Doctor_ID = {id_doctor}""")
         patients = self.executeQuerry(f"""SELECT * FROM Patient WHERE ID_Patient = {id_p}""")
@@ -25,8 +30,8 @@ class DB_Patient(DB):
         id_p=patients[num_p].ID_Patient
         self.executeQuerry(f"""SELECT * FROM Medical_card WHERE Patient_ID={id_p};""")
 
-    def update_diagnos(self,patients,num_p,diagnos):
+    def update_cost(self,patients,num_p,cost):
         id_p=patients[num_p].ID_Patient
-        self.executeQuerry(f"""UPDATE Disease SET Disease = {diagnos} WHERE ID_Disease={id_p};""")
+        self.executeQuerry(f"""UPDATE Medical_card SET Cost_service = '{cost}' WHERE Patient_ID={id_p};""")
         
     

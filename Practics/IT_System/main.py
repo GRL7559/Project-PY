@@ -16,7 +16,7 @@ class main:
                 break
             case _: print("Введено неккоректное значение")
     while(True):
-        print("Что вы хотите сделать?\n1.Добавить пациента\n2.Выписать пациента\n3.Изменить диагноз\n4.Посмотреть данные медкарты\n5.Заврешить работу с программой")
+        print("Что вы хотите сделать?\n1.Добавить пациента\n2.Выписать пациента\n3.Изменить счёт\n4.Посмотреть данные медкарты\n5.Заврешить работу с программой")
         choise=input()
         match (choise):
             case "1":
@@ -44,11 +44,11 @@ class main:
                 registry.delete_patient(patients,num_p)
             case "3":
                 patients=registry.show_patient(id)
-                print("Введите номер пациента,диагноз которого нужно иземенить") 
+                print("Введите номер пациента,счёт которого нужно иземенить") 
                 num_p = int(input())
-                print("Введите новый диагноз пациента") 
-                diagnos = input()
-                registry.update_diagnos(patients,num_p,diagnos)
+                print("Введите сумму") 
+                cost = input()
+                registry.update_cost(patients,num_p,cost)
             case "4":
                 patients=registry.show_patient(id)
                 print("Введите номер пациента,медкарту которого вы хотите просмотреть")
