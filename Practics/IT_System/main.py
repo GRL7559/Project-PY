@@ -9,52 +9,34 @@ class main:
         enter=input()
         match enter:
             case "1": 
-                id=auth.log_in()
+                sid=auth.log_in()
                 break
             case "2": 
                 id=auth.sign_up()
                 break
             case _: print("Введено неккоректное значение")
     while(True):
-        print("Что вы хотите сделать?\n1.Добавить пациента\n2.Выписать пациента\n3.Изменить счёт\n4.Посмотреть данные медкарты\n5.Заврешить работу с программой")
+        print("Что вы хотите сделать?\n1.Выписать пациента\n2.Изменить счёт\n3.Посмотреть данные медкарты\n4.Заврешить работу с программой")
         choise=input()
         match (choise):
             case "1":
-                data = {
-                "Surname_P": "",
-                "Name_P": "",
-                "Secondname_P": "",
-                "POLIS_OMS": 0,
-                "SNILS": 0}
-                print("Введите фамилию",end="")
-                data["Surname_P"]=input()
-                print("Введите имя",end="")
-                data["Name_P"]=input()
-                print("Введите отчество",end="")
-                data["Secondname_P"]=input()
-                print("Введите ПОЛИС ОМС",end="")
-                data["POLIS_OMS"]=int(input())
-                print("Введите СНИЛС",end="")
-                data["SNILS"]=int(input())
-                registry.insertData(data)
-            case "2":
-                patients=registry.show_patient(id)
-                print("Введите номер пациента,которого нужно удалить")
+                registry.show_patient()
+                print("Введите номер пациента,которого нужно выписать")
                 num_p = int(input())
-                registry.delete_patient(patients,num_p)
-            case "3":
-                patients=registry.show_patient(id)
+                registry.delete_patient(num_p)
+            case "2":
+                registry.show_patient()
                 print("Введите номер пациента,счёт которого нужно иземенить") 
                 num_p = int(input())
                 print("Введите сумму") 
                 cost = input()
-                registry.update_cost(patients,num_p,cost)
-            case "4":
-                patients=registry.show_patient(id)
+                registry.update_cost(num_p,cost)
+            case "3":
+                registry.show_patient(id)
                 print("Введите номер пациента,медкарту которого вы хотите просмотреть")
                 num_p = int(input())  
-                registry.medcard_check(patients,num_p)
-            case "5":
+                registry.medcard_check(num_p)
+            case "4":
                 exit(0)
             case _:
                 print("Введено неккоректное значение")

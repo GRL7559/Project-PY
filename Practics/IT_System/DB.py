@@ -25,43 +25,9 @@ class DB:
         querry = f"INSERT INTO {table} ({columns}) VALUES ({values})"
         self.executeQuerry(querry, tuple(data.values()))
 
-    def insertMultiplyData(self, table, data):
-        columns = ", ".join(data[0].keys())
-        values = ', '.join(["(" + ', '.join([f'"{str(value)}"' if isinstance(value, str) else str(value) for value in data.values()]) + ")" for data in data])
-        query = f"INSERT INTO {table} ({columns}) VALUES {values}"
-        all_values = [value for data in data for value in data.values()]
-        self.executeQuerry(query, tuple(all_values))
-
-    def deleteData(self, table, condition):
-        querry = f"DELETE FROM {table} WHERE {list(condition.keys())[0]} = ?"
-        self.executeQuerry(querry, tuple(list(condition.values())[0]))
-
-
-    @staticmethod
-    def getCondion(condition):
-        if len(condition) > 1:
-            conditions = " AND ".join(f"{column} = ?" for column in condition.keys())
-        else:
-            conditions = condition
-        return conditions
-
-    def getId(self, table, condition):
-        conditions = self.getCondion(condition)
-        querry = f"SELECT id FROM {table} WHERE {conditions}"
-        self.executeQuerry(querry)
-
     def getData(self, table):
         querry = f"SELECT * FROM {table}"
         self.executeQuerry(querry)
-
-    def createTable(self, table, column):
-        querry = f"CREATE TABLE IF NOT EXISTS {table} ({', '.join(column)})"
-        self.executeQuerry(querry)
-
-    def updateData(self, table, data, condition):
-        updateData = ", ".join(f"{column} = ?" for column in data.keys())  # name = ?, surname = ?
-        querry = f"UPDATE {table} SET {updateData} WHERE {list(condition.keys())[0]} = ?"
-        self.executeQuerry(querry, tuple(list(data.values()) + list(condition.values())))
 
     def createDatabase(self):
         self.executeQuerry("""
@@ -145,5 +111,3 @@ class DB:
             (5,3,4,2,3000),
             (6,1,3,2,0);    
             """)
-        
-        
