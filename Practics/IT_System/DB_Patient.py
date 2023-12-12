@@ -15,7 +15,7 @@ class DB_Patient(DB):
                 if patient[0] == item:
                     k+=1
                     print(f"{k} {patient[1]} {patient[2]} {patient[3]}")
-        return k-1
+        return k
 
     def create_patient(self,insert):
         self.executeQuerry(f"""
@@ -23,11 +23,13 @@ class DB_Patient(DB):
             VALUES
             ('{insert[0]}','{insert[1]}','{insert[2]}','{insert[3]}','{insert[4]}');
         """)
-        self.executeQuerry(f"""
-            INSERT INTO Disease(Disease)
-            VALUES
-            ('{insert[5]}');
-        """)
+        id_d = self.executeQuerry(f"""SELECT ID_Disease FROM Disease WHERE Disease = {insert[5]}""")
+        if id_d == None:
+            self.executeQuerry(f"""
+                INSERT INTO Disease(Disease)
+                VALUES
+                ('{insert[5]}');
+            """)
         id_d = self.executeQuerry(f"""SELECT ID_Disease FROM Disease WHERE Disease = {insert[5]}""")
         id_p = self.executeQuerry(f"""SELECT ID_Patient FROM Patient WHERE SNILS = {insert[4]}""")
         self.executeQuerry(f"""

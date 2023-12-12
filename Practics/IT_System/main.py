@@ -84,43 +84,52 @@ class main:
                         print("Введено некорректное значение")
             case "2":
                 k = registry.show_patient()
-                print("Введите номер пациента,которого нужно выписать")
-                num_p = int(input())
-                registry.delete_patient(num_p)
+                if k == 0:
+                    print("У вас нет пациентов")
+                else:
+                    print("Введите номер пациента,которого нужно выписать")
+                    num_p = int(input())
+                    registry.delete_patient(num_p)
             case "3":
                 k = registry.show_patient()
-                print("Введите номер пациента,счёт которого нужно иземенить") 
-                while True:
-                    try:
-                        num_p = int(input()) 
-                        if num_p>k and 0<num_p:
+                if k == 0:
+                    print("У вас нет пациентов")
+                else:
+                    print("Введите номер пациента,счёт которого нужно иземенить") 
+                    while True:
+                        try:
+                            num_p = int(input()) 
+                            if num_p>k and 0<num_p:
+                                break
+                            else:
+                                print("Введите номер, присвоенный пациенту")
+                        except(Exception):
+                            print("Введено некорректное значение")
+                    print("Введите сумму") 
+                    while True:
+                        try:
+                            cost = int(input()) 
                             break
-                        else:
-                            print("Введите номер, присвоенный пациенту")
-                    except(Exception):
-                        print("Введено некорректное значение")
-                print("Введите сумму") 
-                while True:
-                    try:
-                        cost = int(input()) 
-                        break
-                    except(Exception):
-                        print("Введено некорректное значение")
-                registry.update_cost(num_p,cost)
+                        except(Exception):
+                            print("Введено некорректное значение")
+                    registry.update_cost(num_p,cost)
             case "4":
                 k = registry.show_patient()
-                print("Введите номер пациента,медкарту которого вы хотите просмотреть")
-                while True:
-                    try:
-                        num_p = int(input()) 
-                        if num_p>k and 0<num_p:
-                            break
-                        else:
-                            print("Введите номер, присвоенный пациенту")
-                    except(Exception):
-                        print("Введено некорректное значение")
-                data = registry.medcard_check(num_p)
-                print(f"ID: {data[0]}\nФамилия: {data[1]}\nИмя: {data[2]}\nОтчество: {data[3]}\nПолис ОМС: {data[4]}\nСНИЛС: {data[5]}\nЗаболевание: {data[6]}\nСтепень тяжести: {data[7]}\nСчёт: {data[8]}")
+                if k == 0:
+                    print("У вас нет пациентов")
+                else:
+                    print("Введите номер пациента,медкарту которого вы хотите просмотреть")
+                    while True:
+                        try:
+                            num_p = int(input()) 
+                            if num_p>k and 0<num_p:
+                                break
+                            else:
+                                print("Введите номер, присвоенный пациенту")
+                        except(Exception):
+                            print("Введено некорректное значение")
+                    data = registry.medcard_check(num_p)
+                    print(f"ID: {data[0]}\nФамилия: {data[1]}\nИмя: {data[2]}\nОтчество: {data[3]}\nПолис ОМС: {data[4]}\nСНИЛС: {data[5]}\nЗаболевание: {data[6]}\nСтепень тяжести: {data[7]}\nСчёт: {data[8]}")
             case "5":
                 exit(0)
             case _:
