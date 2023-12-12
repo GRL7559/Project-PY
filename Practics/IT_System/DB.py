@@ -27,7 +27,7 @@ class DB:
 
     def getData(self, table):
         querry = f"SELECT * FROM {table}"
-        self.executeQuerry(querry)
+        return self.executeQuerry(querry)
 
     def createDatabase(self):
         self.executeQuerry("""
@@ -55,14 +55,14 @@ class DB:
                 Name_D VARCHAR(100) NOT NULL,
                 Secondname_D VARCHAR(100),
                 Phone INTEGER UNIQUE,
-                Password INTEGER           
+                Password VARCHAR(100)           
             );""")
         self.executeQuerry("""
             INSERT INTO Attending_Doctor(Surname_D,Name_D,Secondname_D,Phone,Password)
             VALUES
-            ('Титов','Михаил','Владимирович',78873178684,1234),
-            ('Тихомиров','Андрей','Антонович',71651330207,5678),
-            ('Булатова','Светлана','Владленовна',72534834347,8765);""")
+            ('Титов','Михаил','Владимирович',78873178684,'Gf*1234'),
+            ('Тихомиров','Андрей','Антонович',71651330207,'5678'),
+            ('Булатова','Светлана','Владленовна',72534834347,'8765');""")
         self.executeQuerry(""" 
             CREATE TABLE IF NOT EXISTS Disease(
                 ID_Disease INTEGER PRIMARY KEY AUTOINCREMENT,

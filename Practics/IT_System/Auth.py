@@ -17,8 +17,8 @@ class Auth:
 				continue
 			confirm_login=False
 			for doctor_data in doctors_data:
-				if doctor_data["Phone"] == login:
-					true_password = doctor_data["Password"]
+				if doctor_data[4] == login:
+					true_password = doctor_data[5]
 					confirm_login = True
 			if confirm_login:break
 			else:
@@ -34,24 +34,32 @@ class Auth:
 
 	def sign_up(self):
 		doctor = DB()
-		insert = {"Surname_D":"","Name_D":"","Secondname_D":"","Phone":0,"Password":0}
-		print("Введите фамилию: ", end="")
-		insert["Surname_D"] = input()
-		print("Введите имя: ", end="")
-		insert["Name_D"] = input()
+		insert = ("","","",0,0)
+		while(True):
+			print("Введите фамилию: ", end="")
+			insert[0] = input()
+			if insert[0] == "":
+				print("Фамилия не может быть пустым")
+			else:break
+		while(True):
+			print("Введите имя: ", end="")
+			insert[1] = input()
+			if insert[1] == "":
+				print("Имя не может быть пустым")
+			else:break
 		print("Введите отчество: ", end="")
-		insert["Secondname_D"] = input()
+		insert[2] = input()
 		print("Введите номер телефона: ", end="")
 		while True:
 			try:
-				insert["Phone"] = int(input()) 
+				insert[3] = int(input()) 
 				break
 			except(Exception):
 				print("Введено некорректное значение")
 				continue
 		while True:
-			insert["Password"] = input("Введите пароль: ")
-			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert["Password"]):
+			insert[4] = input("Введите пароль: ")
+			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert[4]):
 				break
 			else:
 				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
