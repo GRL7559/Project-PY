@@ -20,7 +20,7 @@ class main:
         choise=input()
         match (choise):
             case "1":
-                insert = ("","","",0,0,id,"",0,0)
+                insert = ["","","",0,0,id,"",0,0]
                 patients = registry.getData("Patient")
                 severities = registry.getData("Severity")
                 while(True):
@@ -37,9 +37,9 @@ class main:
                     else:break
                 print("Введите отчество: ", end="")
                 insert[2] = input()
-                print("Введите ПОЛИС ОМС: ", end="")
                 while True:
                     try:
+                        print("Введите ПОЛИС ОМС: ", end="")
                         insert[3] = int(input()) 
                         unique = True
                         for patient in patients:
@@ -49,9 +49,9 @@ class main:
                             break
                     except(Exception):
                         print("Введено некорректное значение")
-                print("Введите СНИЛС: ", end="")
                 while True:
                     try:
+                        print("Введите СНИЛС: ", end="")
                         insert[4] = int(input()) 
                         for patient in patients:
                             if insert[4] == patient[4]:
@@ -62,7 +62,7 @@ class main:
                         print("Введено некорректное значение")
                 print("Введите диагноз: ", end="")
                 insert[6] = input()
-                print(f"Введите номер степени тяжести\n1.{severities[0]}\n2.{severities[1]}\n3.{severities[2]}")
+                print(f"Введите номер степени тяжести\n1.{severities[0][1]}\n2.{severities[1][1]}\n3.{severities[2][1]}")
                 while True:
                     try:
                         insert[7] = int(input()) 
@@ -72,9 +72,9 @@ class main:
                             print("Введите номер из приведенного списка")
                     except(Exception):
                         print("Введено некорректное значение")
-                print("Введите текущую задолженность по счёту: ", end="")
                 while True:
                     try:
+                        print("Введите текущую задолженность по счёту: ", end="")
                         insert[8] = int(input())
                         if insert[8]<0:
                             print("Счёт не может быть отрицательным")

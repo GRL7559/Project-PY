@@ -19,6 +19,7 @@ class Auth:
 			for doctor_data in doctors_data:
 				if doctor_data[4] == login:
 					true_password = doctor_data[5]
+					id_doctor = doctor_data[0]
 					confirm_login = True
 			if confirm_login:break
 			else:
@@ -31,10 +32,11 @@ class Auth:
 				break
 			else:
 				print("Неверный пароль"),
+		return id_doctor
 
 	def sign_up(self):
 		doctor = DB()
-		insert = ("","","",0,0)
+		insert = ["","","",0,0]
 		while(True):
 			print("Введите фамилию: ", end="")
 			insert[0] = input()
@@ -64,7 +66,10 @@ class Auth:
 			else:
 				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
 		doctor.insertData("Attending_Doctor",insert)
+		id_doctor = (doctor.executeQuerry(f"""SELECT ID_Doctor FROM Attending_Doctor WHERE Phone = {insert[3]}"""))
 		print("Пользователь успешно добавлен")
+		return id_doctor
+
 
 	
 

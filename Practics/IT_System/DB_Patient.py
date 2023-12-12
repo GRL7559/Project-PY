@@ -8,7 +8,7 @@ class DB_Patient(DB):
        
     def show_patient(self):
         select = self.executeQuerry(f"""SELECT Patient_ID FROM Medical_card WHERE Doctor_ID = {self.id}""")
-        patients = self.executeQuerry(f"""SELECT * FROM Patient """)
+        patients = self.executeQuerry(f"""SELECT * FROM Patient""")
         k=0
         for patient in patients:
             for item in select:
