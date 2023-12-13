@@ -3,8 +3,8 @@ from DB import DB
 class DB_Patient(DB):
     def __init__(self,id):
         self.id = id
-        #self.createDatabase()
-        pass
+        self.createDatabase()
+        #pass
        
     def show_patient(self):
         select = self.executeQuerry(f"""SELECT Patient_ID FROM Medical_card WHERE Doctor_ID = {self.id}""")

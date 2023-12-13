@@ -69,8 +69,3 @@ class Auth:
 		id_doctor = (doctor.executeQuerry(f"""SELECT ID_Doctor FROM Attending_Doctor WHERE Phone = {insert['Phone']}"""))
 		print("Пользователь успешно добавлен")
 		return id_doctor[0][0]
-
-
-	
-
-			
