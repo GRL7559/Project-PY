@@ -36,39 +36,39 @@ class Auth:
 
 	def sign_up(self):
 		doctor = DB()
-		insert = ["","","",0,0]
+		insert = {'Surname_D': '', 'Name_D': '', 'Secondname_D': '', 'Phone': 0, 'Password': 0}
 		while(True):
 			print("Введите фамилию: ", end="")
-			insert[0] = input()
-			if insert[0] == "":
+			insert['Surname_D'] = input()
+			if insert['Surname_D'] == "":
 				print("Фамилия не может быть пустым")
 			else:break
 		while(True):
 			print("Введите имя: ", end="")
-			insert[1] = input()
-			if insert[1] == "":
+			insert['Name_D'] = input()
+			if insert['Name_D'] == "":
 				print("Имя не может быть пустым")
 			else:break
 		print("Введите отчество: ", end="")
-		insert[2] = input()
+		insert['Secondname_D'] = input()
 		print("Введите номер телефона: ", end="")
 		while True:
 			try:
-				insert[3] = int(input()) 
+				insert['Phone'] = int(input()) 
 				break
 			except(Exception):
 				print("Введено некорректное значение")
 				continue
 		while True:
-			insert[4] = input("Введите пароль: ")
-			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert[4]):
+			insert['Password'] = input("Введите пароль: ")
+			if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", insert['Password']):
 				break
 			else:
 				print("Пароль должен содержать строчные и заглавные буквы, цифры и специальные символы, и быть не менее 8 символов длиной.")
 		doctor.insertData("Attending_Doctor",insert)
-		id_doctor = (doctor.executeQuerry(f"""SELECT ID_Doctor FROM Attending_Doctor WHERE Phone = {insert[3]}"""))
+		id_doctor = (doctor.executeQuerry(f"""SELECT ID_Doctor FROM Attending_Doctor WHERE Phone = {insert['Phone']}"""))
 		print("Пользователь успешно добавлен")
-		return id_doctor
+		return id_doctor[0][0]
 
 
 	

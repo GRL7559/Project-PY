@@ -21,9 +21,9 @@ class DB:
 
     def insertData(self, table, data):
         columns = ", ".join(data.keys())
-        values = ', '.join([f'"{value}"' if isinstance(value, str) else str(value) for value in data.values()])
-        querry = f"INSERT INTO {table} ({columns}) VALUES ({values})"
-        self.executeQuerry(querry, tuple(data.values()))
+        values = ', '.join(['?' for _ in data.values()])
+        query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
+        self.executeQuerry(query, tuple(data.values()))
 
     def getData(self, table):
         querry = f"SELECT * FROM {table}"
