@@ -2,6 +2,16 @@ from Auth import Auth
 from DB_Patient import DB_Patient 
 
 class main:
+    def Input_int(k):
+        while True:
+            try:
+                num_p = int(input()) 
+                if num_p<=k and 0<num_p:
+                    return num_p
+                else:
+                    print("Введите номер, присвоенный пациенту")
+            except(Exception):
+                print("Введено некорректное значение")
     registry = DB_Patient(-1)
     auth = Auth()
     while(True):
@@ -20,7 +30,7 @@ class main:
         choise=input()
         match (choise):
             case "1":
-                insert = ["","","",0,0,id,"",0,0]
+                insert = ["","","",0,0,registry.id,"",0,0]
                 patients = registry.getData("Patient")
                 severities = registry.getData("Severity")
                 while(True):
@@ -82,13 +92,14 @@ class main:
                             break
                     except(Exception):
                         print("Введено некорректное значение")
+                registry.create_patient(insert)
             case "2":
                 k = registry.show_patient()
                 if k == 0:
                     print("У вас нет пациентов")
                 else:
                     print("Введите номер пациента,которого нужно выписать")
-                    num_p = int(input())
+                    num_p = Input_int(k)
                     registry.delete_patient(num_p)
             case "3":
                 k = registry.show_patient()
@@ -96,15 +107,7 @@ class main:
                     print("У вас нет пациентов")
                 else:
                     print("Введите номер пациента,счёт которого нужно иземенить") 
-                    while True:
-                        try:
-                            num_p = int(input()) 
-                            if num_p>k and 0<num_p:
-                                break
-                            else:
-                                print("Введите номер, присвоенный пациенту")
-                        except(Exception):
-                            print("Введено некорректное значение")
+                    num_p = Input_int(k)
                     print("Введите сумму") 
                     while True:
                         try:
@@ -119,15 +122,7 @@ class main:
                     print("У вас нет пациентов")
                 else:
                     print("Введите номер пациента,медкарту которого вы хотите просмотреть")
-                    while True:
-                        try:
-                            num_p = int(input()) 
-                            if num_p>k and 0<num_p:
-                                break
-                            else:
-                                print("Введите номер, присвоенный пациенту")
-                        except(Exception):
-                            print("Введено некорректное значение")
+                    num_p = Input_int(k)
                     data = registry.medcard_check(num_p)
                     print(f"ID: {data[0]}\nФамилия: {data[1]}\nИмя: {data[2]}\nОтчество: {data[3]}\nПолис ОМС: {data[4]}\nСНИЛС: {data[5]}\nЗаболевание: {data[6]}\nСтепень тяжести: {data[7]}\nСчёт: {data[8]}")
             case "5":
